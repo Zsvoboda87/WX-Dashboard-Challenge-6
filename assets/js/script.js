@@ -1,7 +1,16 @@
 var searchButton = document.querySelector(".search-button")
+var cityNameInput = document.querySelector("#city-name-input")
 
 var getCityName = function() {
-    console.log("test")
+    var city = cityNameInput.value.trim();
+    event.preventDefault();
+
+    if (city) {
+        getLongLat(city)
+        cityNameInput.value = "";
+    } else {
+        alert("Please Enter a City's Name");
+    }
 }
 
 var getLongLat = function (cityName) {
