@@ -4,7 +4,6 @@ var cityNameInput = document.querySelector("#city-name-input")
 var fiveDayParent = document.querySelector("#five-day-forecast")
 var currentDayParent = document.querySelector("#current-day")
 
-
 var x =0
 
 var getCityName = function() {
@@ -34,18 +33,7 @@ var getLongLat = function (cityName) {
             getSevenDayForecast(lon, lat, name)
         })
     });
-
-   
-
-    // var citytext = cityName
-    // var currentday = document.createElement("h3");
-    // currentday.textContent = citytext.toUpperCase() ;
-    // currentDayParent.append(currentday); 
-
-
-
 };
-
 
 var getSevenDayForecast = function (long, lat, name) {
     var sevenDayURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=imperial&exclude=minutely,hourly&appid=566806fcb1c14e56b4f2bf67f8115d7f"
@@ -59,12 +47,46 @@ var getSevenDayForecast = function (long, lat, name) {
     });
 };
 
-
-
 var displayCurrentConditions = function(data, name) {
     console.log(data)
-    console.log(name)
+    // console.log(name)
+
+    var currentDay = document.createElement("h3")
+    currentDay.textContent = name + ": " + unixTime(data.daily[0].dt)
+    currentDayParent.append(currentDay); 
+
+    var currentDayTemp = document.createElement("div")
+    currentDayTemp.textContent =  "Temp:   " + Math.round(data.daily[0].temp.day) + " ºF";
+    currentDayParent.append(currentDayTemp); 
+
+    var currentDayHum = document.createElement("div")
+    currentDayHum.textContent =  "Humidity:   " + data.daily[0].humidity + " %";
+    currentDayParent.append(currentDayHum); 
+
+    var currentDayWind = document.createElement("div")
+    currentDayWind.textContent =  "Wind Speed:   " + data.daily[0].wind_speed + " MPH";
+    currentDayParent.append(currentDayWind); 
+
+    var currentDayUv = document.createElement("div")
+    currentDayUv.textContent =  "UV Index:   " + data.daily[0].uvi;
+    if (data.daily[0].uvi <= 2) {
+        currentDayUv.classList.add("bg-green")
+    } if (data.daily[0].uvi >2 & data.daily[0].uvi < 8) {
+        currentDayUv.classList.add("bg-yellow")
+    }
+
+    currentDayParent.append(currentDayUv); 
+
+
+
 };
+
+var unixTime = function (uts) {
+    var millis = uts * 1000
+    var dateObj = new Date(millis)
+    var date = dateObj.toLocaleDateString("en-us", { month: "short", day: "numeric", year: "numeric" });
+    return date
+}
 
 
 var displayFiveDay = function(data) {
@@ -75,7 +97,7 @@ var displayFiveDay = function(data) {
         var UTS = data.daily[i].dt
         var millis = UTS * 1000
         var dateObj = new Date(millis)
-        var date = dateObj.toLocaleDateString("en-us", {month: "short", day: "numeric", year: "numeric"});
+        var date = unixTime(data.daily[i].dt)
         var dayOfWeek = dateObj.toLocaleDateString("en-us", {weekday: "long"});
 
         //retreive icon image using icon code

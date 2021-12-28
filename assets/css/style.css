@@ -28,3 +28,18 @@ header {
     padding-top:5px;
     background-color: rgb(112, 226, 235);
 }
+
+.bg-green {
+    background-color: rgb(97, 204, 97);
+    width:25%;
+}
+
+.bg-yellow {
+    background-color: rgb(255, 221, 109);
+    width:25%;
+}
+
+.bg-red {
+    background-color: rgb(245, 80, 80);
+    width:25%;
+}
