@@ -31,9 +31,16 @@ var getSevenDayForecast = function (long, lat) {
 
     fetch(sevenDayURL).then(function (response) {
         response.json().then(function (data) {
-            console.log(data)
+            displayFiveDay(data)
         });
     });
 };
+
+var displayFiveDay = function(data) {
+
+    for (var i =0; i < 5; i++ ) {
+    console.log(data);
+    }
+}
 
 searchButton.addEventListener("click", getCityName);
