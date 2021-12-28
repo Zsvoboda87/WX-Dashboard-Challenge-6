@@ -4,9 +4,18 @@ var searchButton2 = document.querySelector(".search-button2")
 var cityNameInput = document.querySelector("#city-name-input")
 var fiveDayParent = document.querySelector("#five-day-forecast")
 var currentDayParent = document.querySelector("#current-day")
-var formParent = document.querySelector("#form")
+var formParent = document.querySelector("#form-column")
 
 var x =0
+
+if (JSON.parse(localStorage.getItem("cityArray"))) {
+var oldArray =JSON.parse(localStorage.getItem("cityArray"))
+} else { var oldArray = []}
+
+var cityArray = [...oldArray,]
+
+
+// var masterArray = [...oldArray, ...cityArray] 
 
 // function to capture UI 
 var getCityName = function() {
@@ -15,9 +24,14 @@ var getCityName = function() {
 
     if (city) {
         getLongLat(city);
-        localStorage.setItem(("searchedCity" + [x]), city);
-        displaySearchedCity();
-        x++;
+        cityArray.push(city)
+        var cities = document.createElement("div")
+        cities.textContent = city;
+        formParent.append(cities)
+        localStorage.setItem("cityArray", JSON.stringify(cityArray));
+        
+        
+        // x++;
         cityNameInput.value = "";
     } else {
         alert("Please Enter a City's Name");
@@ -26,16 +40,15 @@ var getCityName = function() {
 
 var displaySearchedCity = function() {
 
-    for (i=0; )
-
-    var searched = localStorage.getItem(("searchedCity"+[x]))
-    console.log(searched)
-
+    var searched = JSON.parse(localStorage.getItem("cityArray"));
+    if (!searched) {return} 
+    else {
+    for (i=0; i < searched.length; i++) {
     var cities = document.createElement("div")
-    cities.innerHTML = searched
-    formParent.append(cities)
-
+    cities.textContent = searched[i];
+    formParent.append(cities)}}
 } 
+displaySearchedCity();
 
 // function to get longatude and latitude data, and pass the city name
 var getLongLat = function (cityName) {
