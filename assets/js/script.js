@@ -1,6 +1,10 @@
-var cityName = "Cleveland"
+var searchButton = document.querySelector(".search-button")
 
-var getLongLat = function () {
+var getCityName = function() {
+    console.log("test")
+}
+
+var getLongLat = function (cityName) {
     var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&APPID=566806fcb1c14e56b4f2bf67f8115d7f"
 
     fetch(apiUrl).then(function (response) {
@@ -12,7 +16,6 @@ var getLongLat = function () {
     });
 };
 
-getLongLat();
 
 var getSevenDayForecast = function (long, lat) {
     var sevenDayURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=imperial&exclude=minutely,hourly&appid=566806fcb1c14e56b4f2bf67f8115d7f"
@@ -23,3 +26,5 @@ var getSevenDayForecast = function (long, lat) {
         });
     });
 };
+
+searchButton.addEventListener("click", getCityName);
