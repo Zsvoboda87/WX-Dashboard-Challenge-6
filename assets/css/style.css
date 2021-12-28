@@ -13,8 +13,8 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: 200px;
-    margin: 10px;
+    height: 250px;
+    margin: 5px;
     padding-top:5px;
     background-color: grey;
 }

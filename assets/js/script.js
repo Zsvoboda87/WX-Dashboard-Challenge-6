@@ -49,7 +49,11 @@ var displayFiveDay = function(data) {
         var date = dateObj.toLocaleDateString("en-us", {month: "short", day: "numeric", year: "numeric"});
         var dayOfWeek = dateObj.toLocaleDateString("en-us", {weekday: "long"});
 
-        
+        //retreive icon image using Icon code
+        // data.daily[i].weather[0].icon
+        var iconCode = "10d"
+        // var iconUrl = "http://openweathermap.org/img/wn/10d@2x.png";
+
 
         // create Parent Div for Card Info
         var dayEl = document.createElement("div");
@@ -64,9 +68,9 @@ var displayFiveDay = function(data) {
         dayDate.textContent = date;
         dayEl.append(dayDate);
         
-        // var dayDate = document.createElement("h6");
-        // dayDate.textContent = fetch("http://openweathermap.org/img/wn/10d@2x.png");
-        // dayEl.append(dayDate);
+        var dayIcon = document.createElement("div")
+        dayIcon.innerHTML = "<img src='http://openweathermap.org/img/wn/" + iconCode + "@2x.png'/>"
+        dayEl.append(dayIcon);
 
         var dayTemp = document.createElement("div");
         dayTemp.textContent = "Temp:   " + data.daily[i].temp.day + " ºF";
