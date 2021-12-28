@@ -49,10 +49,16 @@ var getSevenDayForecast = function (long, lat, name) {
 
 var displayCurrentConditions = function(data, name) {
     console.log(data)
-    // console.log(name)
-
+    
+    var iconCode = data.daily[0].weather[0].icon
+    
     var currentDay = document.createElement("h3")
-    currentDay.textContent = name + ": " + unixTime(data.daily[0].dt)
+    currentDay.textContent = name + ": " + unixTime(data.daily[0].dt) + "  "
+
+    var currentDayIconEl = document.createElement("div")
+    currentDayIconEl.innerHTML = "<img src='http://openweathermap.org/img/wn/" + iconCode + ".png'/>"
+
+    currentDay.append(currentDayIconEl)
     currentDayParent.append(currentDay); 
 
     var currentDayTemp = document.createElement("div")
