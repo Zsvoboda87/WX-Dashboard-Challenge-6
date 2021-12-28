@@ -39,7 +39,8 @@ var getSevenDayForecast = function (long, lat) {
 };
 
 var displayFiveDay = function(data) {
-    console.log(data)
+    // console.log(data)
+
     for (var i =1; i < 6; i++ ) {
 
         //convert Unix Time to readable time
@@ -49,17 +50,14 @@ var displayFiveDay = function(data) {
         var date = dateObj.toLocaleDateString("en-us", {month: "short", day: "numeric", year: "numeric"});
         var dayOfWeek = dateObj.toLocaleDateString("en-us", {weekday: "long"});
 
-        //retreive icon image using Icon code
-        // data.daily[i].weather[0].icon
-        var iconCode = "10d"
-        // var iconUrl = "http://openweathermap.org/img/wn/10d@2x.png";
-
+        //retreive icon image using icon code
+        var iconCode = data.daily[i].weather[0].icon
 
         // create Parent Div for Card Info
         var dayEl = document.createElement("div");
         dayEl.classList = "col-2 five-day-cards";
 
-        // each block adds specific info to the card
+        // adds day and date info to the cards
         var weekday = document.createElement("h5");
         weekday.textContent = dayOfWeek;
         dayEl.append(weekday); 
@@ -67,11 +65,13 @@ var displayFiveDay = function(data) {
         var dayDate = document.createElement("h6");
         dayDate.textContent = date;
         dayEl.append(dayDate);
-        
+
+        // add Icon to weather cards using icon code
         var dayIcon = document.createElement("div")
         dayIcon.innerHTML = "<img src='http://openweathermap.org/img/wn/" + iconCode + "@2x.png'/>"
         dayEl.append(dayIcon);
 
+        // add temperature, humidity, and wind speed data to each weather card
         var dayTemp = document.createElement("div");
         dayTemp.textContent = "Temp:   " + data.daily[i].temp.day + " ºF";
         dayEl.append(dayTemp);
