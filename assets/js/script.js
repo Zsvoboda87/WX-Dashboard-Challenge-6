@@ -5,7 +5,9 @@ var cityNameInput = document.querySelector("#city-name-input")
 var fiveDayParent = document.querySelector("#five-day-forecast")
 var currentDayParent = document.querySelector("#current-day")
 var formParent = document.querySelector("#form-column")
+var cityButton = document.querySelector("#city-buttons")
 
+//local storage recall conditional
 if (JSON.parse(localStorage.getItem("cityArray"))) {
 var oldArray =JSON.parse(localStorage.getItem("cityArray"))
 } else { var oldArray = []}
@@ -22,7 +24,8 @@ var getCityName = function() {
         cityArray.push(city)
         var cities = document.createElement("div")
         cities.textContent = city;
-        formParent.append(cities)
+        cities.classList = "cities"
+        cityButton.append(cities)
         localStorage.setItem("cityArray", JSON.stringify(cityArray));
 
         cityNameInput.value = "";
@@ -39,7 +42,8 @@ var displaySearchedCity = function() {
     for (i=0; i < searched.length; i++) {
     var cities = document.createElement("div")
     cities.textContent = searched[i];
-    formParent.append(cities)}}
+    cities.classList = "cities"
+    cityButton.append(cities)}}
 } 
 displaySearchedCity();
 
@@ -177,7 +181,13 @@ var removeWxInfo = function() {
 
 }
 
-//event listeners
+var storedCity = function() {
+ console.log("click")
+}
 
+
+
+//event listeners
 searchButton.addEventListener("click", removeWxInfo);
 searchButton.addEventListener("click", getCityName);
+cityButton.addEventListener("click", storedCity)
