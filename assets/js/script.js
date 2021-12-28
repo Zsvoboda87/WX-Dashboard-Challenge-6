@@ -4,6 +4,7 @@ var searchButton2 = document.querySelector(".search-button2")
 var cityNameInput = document.querySelector("#city-name-input")
 var fiveDayParent = document.querySelector("#five-day-forecast")
 var currentDayParent = document.querySelector("#current-day")
+var formParent = document.querySelector("#form")
 
 var x =0
 
@@ -13,15 +14,28 @@ var getCityName = function() {
     event.preventDefault();
 
     if (city) {
-        getLongLat(city)
-        // displayCityName(city)
-        localStorage.setItem(("searchedCity" + [x]), city)
+        getLongLat(city);
+        localStorage.setItem(("searchedCity" + [x]), city);
+        displaySearchedCity();
         x++;
         cityNameInput.value = "";
     } else {
         alert("Please Enter a City's Name");
     }
 }
+
+var displaySearchedCity = function() {
+
+    for (i=0; )
+
+    var searched = localStorage.getItem(("searchedCity"+[x]))
+    console.log(searched)
+
+    var cities = document.createElement("div")
+    cities.innerHTML = searched
+    formParent.append(cities)
+
+} 
 
 // function to get longatude and latitude data, and pass the city name
 var getLongLat = function (cityName) {
@@ -53,7 +67,7 @@ var getSevenDayForecast = function (long, lat, name) {
 
 // function to display the current weather in searched city
 var displayCurrentConditions = function(data, name) {
-    console.log(data)
+    // console.log(data)
     
     var iconCode = data.daily[0].weather[0].icon
     
@@ -79,7 +93,7 @@ var displayCurrentConditions = function(data, name) {
     currentDayParent.append(currentDayWind); 
 
     var currentDayUv = document.createElement("div")
-    currentDayUv.textContent =  "UV Index:   " + data.daily[0].uvi;
+    currentDayUv.textContent =  " UV Index:   " + data.daily[0].uvi;
     if (data.daily[0].uvi <= 2) {
         currentDayUv.classList.add("bg-green")
     } if (data.daily[0].uvi >2 & data.daily[0].uvi < 8) {
