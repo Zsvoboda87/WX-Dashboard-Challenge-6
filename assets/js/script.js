@@ -73,12 +73,10 @@ var displayCurrentConditions = function(data, name) {
         currentDayUv.classList.add("bg-green")
     } if (data.daily[0].uvi >2 & data.daily[0].uvi < 8) {
         currentDayUv.classList.add("bg-yellow")
-    }
+    } if  (data.daily[0].uvi >=8 & data.daily[0].uvi <= 10) {
+        currentDayUv.classList.add("bg-red") };
 
     currentDayParent.append(currentDayUv); 
-
-
-
 };
 
 var unixTime = function (uts) {
