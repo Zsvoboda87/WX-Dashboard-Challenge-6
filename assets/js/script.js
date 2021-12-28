@@ -41,22 +41,47 @@ var getSevenDayForecast = function (long, lat) {
 var displayFiveDay = function(data) {
     console.log(data)
     for (var i =1; i < 6; i++ ) {
+
+        //convert Unix Time to readable time
+        var UTS = data.daily[i].dt
+        var millis = UTS * 1000
+        var dateObj = new Date(millis)
+        var date = dateObj.toLocaleDateString("en-us", {month: "short", day: "numeric", year: "numeric"});
+        var dayOfWeek = dateObj.toLocaleDateString("en-us", {weekday: "long"});
+
+        
+
+        // create Parent Div for Card Info
         var dayEl = document.createElement("div");
         dayEl.classList = "col-2 five-day-cards";
 
+        // each block adds specific info to the card
+        var weekday = document.createElement("h5");
+        weekday.textContent = dayOfWeek;
+        dayEl.append(weekday); 
+        
+        var dayDate = document.createElement("h6");
+        dayDate.textContent = date;
+        dayEl.append(dayDate);
+        
+        // var dayDate = document.createElement("h6");
+        // dayDate.textContent = fetch("http://openweathermap.org/img/wn/10d@2x.png");
+        // dayEl.append(dayDate);
 
         var dayTemp = document.createElement("div");
-        dayTemp.textContent = "Temp: " + data.daily[i].temp.day;
+        dayTemp.textContent = "Temp:   " + data.daily[i].temp.day + " ºF";
         dayEl.append(dayTemp);
 
         var dayHum = document.createElement("div");
-        dayHum.textContent = "Humidity: " + data.daily[i].humidity;
+        dayHum.textContent = "Humidity:  " + data.daily[i].humidity + " %";
         dayEl.append(dayHum);
         
         var dayWind = document.createElement("div");
-        dayWind.textContent = "Wind: " + data.daily[i].wind_speed;
+        dayWind.textContent = "Wind:   " + data.daily[i].wind_speed + " MPH";
         dayEl.append(dayWind);
 
+
+        // display parent card to the DOM
         fiveDayParent.append(dayEl);
     }
 }
