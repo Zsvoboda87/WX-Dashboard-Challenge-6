@@ -1,7 +1,11 @@
 var searchButton = document.querySelector(".search-button")
+var searchButton2 = document.querySelector(".search-button2")
 var cityNameInput = document.querySelector("#city-name-input")
 var fiveDayParent = document.querySelector("#five-day-forecast")
+var currentDayParent = document.querySelector("#current-day")
 
+
+var x =0
 
 var getCityName = function() {
     var city = cityNameInput.value.trim();
@@ -9,6 +13,9 @@ var getCityName = function() {
 
     if (city) {
         getLongLat(city)
+        // displayCityName(city)
+        localStorage.setItem(("searchedCity" + [x]), city)
+        x++;
         cityNameInput.value = "";
     } else {
         alert("Please Enter a City's Name");
@@ -20,26 +27,47 @@ var getLongLat = function (cityName) {
 
     fetch(apiUrl).then(function (response) {
         response.json().then(function (data) {
+            // console.log(data)
+            var name = data.name
             var lon = data.coord.lon
             var lat = data.coord.lat
-            getSevenDayForecast(lon, lat)
+            getSevenDayForecast(lon, lat, name)
         })
     });
+
+   
+
+    // var citytext = cityName
+    // var currentday = document.createElement("h3");
+    // currentday.textContent = citytext.toUpperCase() ;
+    // currentDayParent.append(currentday); 
+
+
+
 };
 
 
-var getSevenDayForecast = function (long, lat) {
+var getSevenDayForecast = function (long, lat, name) {
     var sevenDayURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=imperial&exclude=minutely,hourly&appid=566806fcb1c14e56b4f2bf67f8115d7f"
 
+    
     fetch(sevenDayURL).then(function (response) {
         response.json().then(function (data) {
-            displayFiveDay(data)
+            displayCurrentConditions(data, name);
+            displayFiveDay(data);
         });
     });
 };
 
+
+
+var displayCurrentConditions = function(data, name) {
+    console.log(data)
+    console.log(name)
+};
+
+
 var displayFiveDay = function(data) {
-    // console.log(data)
 
     for (var i =1; i < 6; i++ ) {
 
@@ -55,7 +83,7 @@ var displayFiveDay = function(data) {
 
         // create Parent Div for Card Info
         var dayEl = document.createElement("div");
-        dayEl.classList = "col-2 five-day-cards";
+        dayEl.classList = "col-12 col-lg-2 five-day-cards";
 
         // adds day and date info to the cards
         var weekday = document.createElement("h5");
@@ -73,7 +101,7 @@ var displayFiveDay = function(data) {
 
         // add temperature, humidity, and wind speed data to each weather card
         var dayTemp = document.createElement("div");
-        dayTemp.textContent = "Temp:   " + data.daily[i].temp.day + " ºF";
+        dayTemp.textContent = "Temp:   " + Math.round(data.daily[i].temp.day) + " ºF";
         dayEl.append(dayTemp);
 
         var dayHum = document.createElement("div");
@@ -81,7 +109,7 @@ var displayFiveDay = function(data) {
         dayEl.append(dayHum);
         
         var dayWind = document.createElement("div");
-        dayWind.textContent = "Wind:   " + data.daily[i].wind_speed + " MPH";
+        dayWind.textContent = "Wind:   " + Math.round(data.daily[i].wind_speed) + " MPH";
         dayEl.append(dayWind);
 
 
@@ -90,4 +118,9 @@ var displayFiveDay = function(data) {
     }
 }
 
+var reload = function() {
+location.reload()
+}
+
 searchButton.addEventListener("click", getCityName);
+searchButton2.addEventListener("click", reload);

@@ -16,15 +16,22 @@
         THE WEATHER FINDER!!
     </header>
     <main class="row"> 
-        <form class="col-2 m-2">
-            Search for a City's Weather
-            <input type="text" id="city-name-input">
+        <form class="col-2 ml-3 m-2  d-flex flex-column align-items-center">
+            <h4>Search for a City</h4>
+            <input type="text" id="city-name-input" class="m-2">
             <button type="submit" class="search-button">Search</button>
-            <div>PlaceHolder</div>
+            <button type="submit" class="search-button2">reload</button>
+            <div class="mt-4">PlaceHolder</div>
             
         </form>
         <div class="col-9">
-            <div id="current-day">Current Day Place Holder</div>
+            <div id="current-day" class="col-11 d-flex flex-column align-items-left justify-content-around">
+                <!-- <h3>Current Day/date</h3>
+                <div>temp</div>
+                <div>wind</div>
+                <div>humidity</div>
+                <div>UV index</div> -->
+            </div>
             <div id="five-day-forecast" class="row m-2">
                 <!-- <div id="day1" class="col-2 five-day-cards">day1</div>
                 <div id="day2" class="col-2 five-day-cards">day2</div>
