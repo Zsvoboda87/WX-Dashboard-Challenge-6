@@ -1,3 +1,4 @@
+// query selection variables
 var searchButton = document.querySelector(".search-button")
 var searchButton2 = document.querySelector(".search-button2")
 var cityNameInput = document.querySelector("#city-name-input")
@@ -6,6 +7,7 @@ var currentDayParent = document.querySelector("#current-day")
 
 var x =0
 
+// function to capture UI 
 var getCityName = function() {
     var city = cityNameInput.value.trim();
     event.preventDefault();
@@ -21,6 +23,7 @@ var getCityName = function() {
     }
 }
 
+// function to get longatude and latitude data, and pass the city name
 var getLongLat = function (cityName) {
     var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&APPID=566806fcb1c14e56b4f2bf67f8115d7f"
 
@@ -35,6 +38,7 @@ var getLongLat = function (cityName) {
     });
 };
 
+// function to get 7 day wx data from open weather API
 var getSevenDayForecast = function (long, lat, name) {
     var sevenDayURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=imperial&exclude=minutely,hourly&appid=566806fcb1c14e56b4f2bf67f8115d7f"
 
@@ -47,6 +51,7 @@ var getSevenDayForecast = function (long, lat, name) {
     });
 };
 
+// function to display the current weather in searched city
 var displayCurrentConditions = function(data, name) {
     console.log(data)
     
@@ -85,6 +90,7 @@ var displayCurrentConditions = function(data, name) {
     currentDayParent.append(currentDayUv); 
 };
 
+//function to convert Unix time to read date
 var unixTime = function (uts) {
     var millis = uts * 1000
     var dateObj = new Date(millis)
@@ -92,7 +98,7 @@ var unixTime = function (uts) {
     return date
 }
 
-
+//function to display a 5 day forecast
 var displayFiveDay = function(data) {
 
     for (var i =1; i < 6; i++ ) {
@@ -148,5 +154,6 @@ var reload = function() {
 location.reload()
 }
 
+//event listeners
 searchButton.addEventListener("click", getCityName);
 searchButton2.addEventListener("click", reload);
