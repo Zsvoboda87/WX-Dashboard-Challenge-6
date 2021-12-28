@@ -182,10 +182,10 @@ var removeWxInfo = function() {
 }
 
 var storedCity = function() {
- console.log("click")
+    var x = event.target.textContent
+    removeWxInfo();
+    getLongLat(x);
 }
-
-
 
 //event listeners
 searchButton.addEventListener("click", removeWxInfo);
