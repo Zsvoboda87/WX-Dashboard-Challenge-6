@@ -1,5 +1,7 @@
 var searchButton = document.querySelector(".search-button")
 var cityNameInput = document.querySelector("#city-name-input")
+var fiveDayParent = document.querySelector("#five-day-forecast")
+
 
 var getCityName = function() {
     var city = cityNameInput.value.trim();
@@ -37,9 +39,18 @@ var getSevenDayForecast = function (long, lat) {
 };
 
 var displayFiveDay = function(data) {
+    console.log(data)
+    for (var i =1; i < 6; i++ ) {
+        var dayEl = document.createElement("div");
+        dayEl.classList = "col-2 five-day-cards";
 
-    for (var i =0; i < 5; i++ ) {
-    console.log(data);
+
+        var dayTemp = document.createElement("div");
+        dayTemp.textContent = "Temp: " + data.daily[i].temp.day;
+        dayEl.append(dayTemp);
+        
+
+        fiveDayParent.append(dayEl);
     }
 }
 
