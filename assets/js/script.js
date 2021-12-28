@@ -48,7 +48,14 @@ var displayFiveDay = function(data) {
         var dayTemp = document.createElement("div");
         dayTemp.textContent = "Temp: " + data.daily[i].temp.day;
         dayEl.append(dayTemp);
+
+        var dayHum = document.createElement("div");
+        dayHum.textContent = "Humidity: " + data.daily[i].humidity;
+        dayEl.append(dayHum);
         
+        var dayWind = document.createElement("div");
+        dayWind.textContent = "Wind: " + data.daily[i].wind_speed;
+        dayEl.append(dayWind);
 
         fiveDayParent.append(dayEl);
     }
