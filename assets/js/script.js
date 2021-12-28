@@ -6,16 +6,11 @@ var fiveDayParent = document.querySelector("#five-day-forecast")
 var currentDayParent = document.querySelector("#current-day")
 var formParent = document.querySelector("#form-column")
 
-var x =0
-
 if (JSON.parse(localStorage.getItem("cityArray"))) {
 var oldArray =JSON.parse(localStorage.getItem("cityArray"))
 } else { var oldArray = []}
 
 var cityArray = [...oldArray,]
-
-
-// var masterArray = [...oldArray, ...cityArray] 
 
 // function to capture UI 
 var getCityName = function() {
@@ -29,9 +24,7 @@ var getCityName = function() {
         cities.textContent = city;
         formParent.append(cities)
         localStorage.setItem("cityArray", JSON.stringify(cityArray));
-        
-        
-        // x++;
+
         cityNameInput.value = "";
     } else {
         alert("Please Enter a City's Name");
@@ -177,10 +170,14 @@ var displayFiveDay = function(data) {
     }
 }
 
-var reload = function() {
-location.reload()
+var removeWxInfo = function() {
+    event.preventDefault();
+    fiveDayParent.innerHTML=""
+    currentDayParent.innerHTML=""
+
 }
 
 //event listeners
+
+searchButton.addEventListener("click", removeWxInfo);
 searchButton.addEventListener("click", getCityName);
-searchButton2.addEventListener("click", reload);
