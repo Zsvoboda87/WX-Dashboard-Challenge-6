@@ -14,23 +14,32 @@ var oldArray =JSON.parse(localStorage.getItem("cityArray"))
 
 var cityArray = [...oldArray,]
 
-// function to capture UI 
-var getCityName = function() {
+var firstTime = function (city) {
+    cityArray.push(city)
+    var cities = document.createElement("div")
+    cities.textContent = city;
+    cities.classList = "cities"
+    cityButton.append(cities)
+    localStorage.setItem("cityArray", JSON.stringify(cityArray));
+}
+
+// function to capture and validate User Input
+var getCityName = function () {
     var city = cityNameInput.value.trim();
     event.preventDefault();
+    cityNameInput.value = "";
 
     if (city) {
-        getLongLat(city);
-        cityArray.push(city)
-        var cities = document.createElement("div")
-        cities.textContent = city;
-        cities.classList = "cities"
-        cityButton.append(cities)
-        localStorage.setItem("cityArray", JSON.stringify(cityArray));
+        var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&APPID=566806fcb1c14e56b4f2bf67f8115d7f"
 
-        cityNameInput.value = "";
-    } else {
-        alert("Please Enter a City's Name");
+        fetch(apiUrl).then(function (response) {
+            if (response.ok) {
+                getLongLat(city);
+                firstTime(city);
+            } else {
+                alert("Not a Valid City Name");
+            }
+        })
     }
 }
 
@@ -52,13 +61,17 @@ var getLongLat = function (cityName) {
     var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&APPID=566806fcb1c14e56b4f2bf67f8115d7f"
 
     fetch(apiUrl).then(function (response) {
-        response.json().then(function (data) {
-            // console.log(data)
-            var name = data.name
-            var lon = data.coord.lon
-            var lat = data.coord.lat
-            getSevenDayForecast(lon, lat, name)
-        })
+        if (response.ok) {
+            response.json().then(function (data) {
+                // console.log(data)
+                var name = data.name
+                var lon = data.coord.lon
+                var lat = data.coord.lat
+                getSevenDayForecast(lon, lat, name)
+
+        })} else {
+            window.alert('not at valid city')
+        }
     });
 };
 

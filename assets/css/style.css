@@ -2,6 +2,7 @@ body {
     margin: 5px;
 }
 
+/* style for the header */
 header {
     display:flex;
     justify-content:center;
@@ -9,16 +10,16 @@ header {
     background-color: darkslateblue;
     color: floralwhite;
     margin: 10px 10px;
-    /* padding: 20px 5px; */
     border-radius: 10px;
 }
 
+/* style for the current weather */
 #current-day {
     height:250px;
     border: 2px solid black;
-
 }
 
+/* style for the future weather cards */
 .five-day-cards {
     display: flex;
     flex-direction: column;
@@ -29,8 +30,8 @@ header {
     background-color: rgb(112, 226, 235);
 }
 
-.cities {
-    
+/* style for saved cities */
+.cities { 
     margin: 5px;
     padding: 10px;
     background-color: rgb(122, 104, 238);
@@ -43,6 +44,7 @@ header {
    
 }
 
+/* UV index background colors */
 .bg-green {
     background-color: rgb(97, 204, 97);
     width:25%;
