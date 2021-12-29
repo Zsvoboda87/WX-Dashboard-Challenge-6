@@ -30,7 +30,7 @@ var getCityName = function () {
     cityNameInput.value = "";
 
     if (city) {
-        var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&APPID=566806fcb1c14e56b4f2bf67f8115d7f"
+        var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&APPID=566806fcb1c14e56b4f2bf67f8115d7f"
 
         fetch(apiUrl).then(function (response) {
             if (response.ok) {
@@ -58,7 +58,7 @@ displaySearchedCity();
 
 // function to get longatude and latitude data, and pass the city name
 var getLongLat = function (cityName) {
-    var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&APPID=566806fcb1c14e56b4f2bf67f8115d7f"
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&APPID=566806fcb1c14e56b4f2bf67f8115d7f"
 
     fetch(apiUrl).then(function (response) {
         if (response.ok) {
