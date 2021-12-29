@@ -4,51 +4,74 @@ var searchButton2 = document.querySelector(".search-button2")
 var cityNameInput = document.querySelector("#city-name-input")
 var fiveDayParent = document.querySelector("#five-day-forecast")
 var currentDayParent = document.querySelector("#current-day")
-var formParent = document.querySelector("#form")
+var formParent = document.querySelector("#form-column")
+var cityButton = document.querySelector("#city-buttons")
 
-var x =0
+//local storage recall conditional
+if (JSON.parse(localStorage.getItem("cityArray"))) {
+var oldArray =JSON.parse(localStorage.getItem("cityArray"))
+} else { var oldArray = []}
 
-// function to capture UI 
-var getCityName = function() {
+var cityArray = [...oldArray,]
+
+var firstTime = function (city) {
+    cityArray.push(city)
+    var cities = document.createElement("div")
+    cities.textContent = city;
+    cities.classList = "cities"
+    cityButton.append(cities)
+    localStorage.setItem("cityArray", JSON.stringify(cityArray));
+}
+
+// function to capture and validate User Input
+var getCityName = function () {
     var city = cityNameInput.value.trim();
     event.preventDefault();
+    cityNameInput.value = "";
 
     if (city) {
-        getLongLat(city);
-        localStorage.setItem(("searchedCity" + [x]), city);
-        displaySearchedCity();
-        x++;
-        cityNameInput.value = "";
-    } else {
-        alert("Please Enter a City's Name");
+        var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&APPID=566806fcb1c14e56b4f2bf67f8115d7f"
+
+        fetch(apiUrl).then(function (response) {
+            if (response.ok) {
+                getLongLat(city);
+                firstTime(city);
+            } else {
+                alert("Not a Valid City Name");
+            }
+        })
     }
 }
 
 var displaySearchedCity = function() {
 
-    for (i=0; )
-
-    var searched = localStorage.getItem(("searchedCity"+[x]))
-    console.log(searched)
-
+    var searched = JSON.parse(localStorage.getItem("cityArray"));
+    if (!searched) {return} 
+    else {
+    for (i=0; i < searched.length; i++) {
     var cities = document.createElement("div")
-    cities.innerHTML = searched
-    formParent.append(cities)
-
+    cities.textContent = searched[i];
+    cities.classList = "cities"
+    cityButton.append(cities)}}
 } 
+displaySearchedCity();
 
 // function to get longatude and latitude data, and pass the city name
 var getLongLat = function (cityName) {
     var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&APPID=566806fcb1c14e56b4f2bf67f8115d7f"
 
     fetch(apiUrl).then(function (response) {
-        response.json().then(function (data) {
-            // console.log(data)
-            var name = data.name
-            var lon = data.coord.lon
-            var lat = data.coord.lat
-            getSevenDayForecast(lon, lat, name)
-        })
+        if (response.ok) {
+            response.json().then(function (data) {
+                // console.log(data)
+                var name = data.name
+                var lon = data.coord.lon
+                var lat = data.coord.lat
+                getSevenDayForecast(lon, lat, name)
+
+        })} else {
+            window.alert('not at valid city')
+        }
     });
 };
 
@@ -164,10 +187,20 @@ var displayFiveDay = function(data) {
     }
 }
 
-var reload = function() {
-location.reload()
+var removeWxInfo = function() {
+    event.preventDefault();
+    fiveDayParent.innerHTML=""
+    currentDayParent.innerHTML=""
+
+}
+
+var storedCity = function() {
+    var x = event.target.textContent
+    removeWxInfo();
+    getLongLat(x);
 }
 
 //event listeners
+searchButton.addEventListener("click", removeWxInfo);
 searchButton.addEventListener("click", getCityName);
-searchButton2.addEventListener("click", reload);
+cityButton.addEventListener("click", storedCity)
