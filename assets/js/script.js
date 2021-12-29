@@ -63,7 +63,6 @@ var getLongLat = function (cityName) {
     fetch(apiUrl).then(function (response) {
         if (response.ok) {
             response.json().then(function (data) {
-                // console.log(data)
                 var name = data.name
                 var lon = data.coord.lon
                 var lat = data.coord.lat
@@ -90,7 +89,6 @@ var getSevenDayForecast = function (long, lat, name) {
 
 // function to display the current weather in searched city
 var displayCurrentConditions = function(data, name) {
-    // console.log(data)
     
     var iconCode = data.daily[0].weather[0].icon
     
